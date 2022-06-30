@@ -42,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           color: Colors.white),
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 17),
+            padding: const EdgeInsets.symmetric(vertical: 17),
             child: Column(
               children: [
                 Expanded(
@@ -113,79 +113,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           (int index) => _buildDots(index: index),
                         ),
                       ),
-                      isLast == true
-                          ? Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushReplacementNamed(
-                                      context, LoginScreen.routeName);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Theme.of(context).primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  padding: (width <= 550)
-                                      ? const EdgeInsets.symmetric(
-                                          horizontal: 100, vertical: 20)
-                                      : EdgeInsets.symmetric(
-                                          horizontal: width * 0.2, vertical: 25),
-                                  textStyle: TextStyle(
-                                      fontSize: (width <= 550) ? 13 : 17),
-                                ),
-                                child: const Text("START"),
-                              ),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacementNamed(
-                                          context, LoginScreen.routeName);
-                                    },
-                                    style: TextButton.styleFrom(
-                                      elevation: 0,
-                                      textStyle: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: (width <= 550) ? 13 : 17,
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      "SKIP",
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      _controller.nextPage(
-                                        duration:
-                                            const Duration(milliseconds: 100),
-                                        curve: Curves.fastLinearToSlowEaseIn,
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Theme.of(context).primaryColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      elevation: 0,
-                                      padding: (width <= 550)
-                                          ? const EdgeInsets.symmetric(
-                                              horizontal: 30, vertical: 20)
-                                          : const EdgeInsets.symmetric(
-                                              horizontal: 30, vertical: 25),
-                                      textStyle: TextStyle(
-                                          fontSize: (width <= 550) ? 13 : 17),
-                                    ),
-                                    child: const Text("NEXT"),
-                                  ),
-                                ],
-                              ),
-                            ),
+                     ElevatedButton(
+                       onPressed: () {
+                         Navigator.pushReplacementNamed(
+                             context, LoginScreen.routeName);
+                       },
+                       style: ElevatedButton.styleFrom(
+                         primary: Theme.of(context).primaryColor,
+                         shape: RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(50),
+                         ),
+                         padding: (width <= 550)
+                             ? const EdgeInsets.symmetric(
+                                 horizontal: 100, vertical: 20)
+                             : EdgeInsets.symmetric(
+                                 horizontal: width * 0.2, vertical: 25),
+                         textStyle: TextStyle(
+                             fontSize: (width <= 550) ? 13 : 17),
+                       ),
+                       child: const Text("Get Started"),
+                     ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -193,7 +141,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             "Don't have an Account ? ",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: 16,
                                 fontWeight: FontWeight.normal),
                           ),
                           InkWell(
@@ -202,7 +150,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     decoration: TextDecoration.underline)),
                           ),
                         ],

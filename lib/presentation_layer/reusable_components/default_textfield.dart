@@ -39,40 +39,45 @@ class DefaultTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: isHidden,
-      onFieldSubmitted: onFieldSubmitted,
-      validator: validator,
-      key: key,
-      controller: controller,
-      onChanged: (String value) {},
-      // cursorColor: ThemeManager.lightTheme.primaryColor,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              borderSide: BorderSide(color: Theme.of(context).primaryColor)),
-          labelText: labelText,
-          hintStyle: TextStyle(color: Theme.of(context).primaryColor),
-          labelStyle: TextStyle(color: Theme.of(context).primaryColor),
-          hintText: hintText,
-
-          // hintText: hintText,
-          prefixIcon: Icon(prefix, color: Theme.of(context).primaryColor),
-          suffixIcon: InkWell(
-            onTap: suffixPressed,
-            child: Icon(
-              suffix,
-              color: Theme.of(context).primaryColor,
+        obscureText: isHidden,
+        onFieldSubmitted: onFieldSubmitted,
+        validator: validator,
+        key: key,
+        controller: controller,
+        onChanged: (String value) {},
+        // cursorColor: Colors.grey.shade200,
+        decoration: InputDecoration(
+          filled: true,
+            fillColor: Colors.grey.shade200,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(3.0),
             ),
-          ),
-          // border: InputBorder.none,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 14, vertical: 14)),
-    );
+            focusedErrorBorder: OutlineInputBorder(
+
+                borderRadius: BorderRadius.circular(3.0),
+                borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(3.0),
+                borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+            labelText: labelText,
+            hintStyle: TextStyle(color: Theme.of(context).primaryColor),
+            labelStyle: TextStyle(color: Theme.of(context).primaryColor),
+            hintText: hintText,
+
+            // hintText: hintText,
+            prefixIcon: Icon(prefix, color: Theme.of(context).primaryColor),
+            suffixIcon: InkWell(
+              onTap: suffixPressed,
+              child: Icon(
+                suffix,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            contentPadding:
+                const EdgeInsetsDirectional.all(21)) // border: InputBorder.none,
+        );
   }
 }

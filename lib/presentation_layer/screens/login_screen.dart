@@ -1,10 +1,10 @@
-import 'package:algoriza_task1/constants.dart';
 import 'package:algoriza_task1/presentation_layer/reusable_components/default_button.dart';
-import 'package:algoriza_task1/presentation_layer/reusable_components/default_textfield.dart';
 import 'package:algoriza_task1/presentation_layer/screens/register_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -16,8 +16,19 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  String initialCountry = 'NG';
+  PhoneNumber number = PhoneNumber(isoCode: 'NG');
   var formKey = GlobalKey<FormState>();
+  void getPhoneNumber(String phoneNumber) async {
+    PhoneNumber number =
+        await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'US');
+
+    setState(() {
+      this.number = number;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -34,71 +45,112 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: Stack(
+      body: Column(
         children: [
-          Positioned(
-              left: 0,
-              right: 0,
+          Expanded(
+              flex: 3,
               child: Container(
                 width: double.maxFinite,
-                height: 280,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage('assets/Capture_auto_x2.jpg'),
                         fit: BoxFit.cover)),
               )),
-          Positioned(
-            top: 80,
-            bottom: 0,
+          Expanded(
+            flex: 8,
             child: Container(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
+              padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Welcome to Fashion Daily'),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    children: [
-                      Text('Sign in',
-                          style: GoogleFonts.sourceSerifPro(fontSize: 35)),
-                      const Spacer(),
-                      const Text(
-                        'Help',
-                        style: TextStyle(color: Colors.blue, fontSize: 16),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Welcome to Fashion Daily'),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        Text('Sign in',
+                            style: GoogleFonts.sourceSerifPro(fontSize: 35)),
+                        const Spacer(),
+                        const Text(
+                          'Help',
+                          style: TextStyle(color: Colors.blue, fontSize: 16),
+                        ),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        Image.asset(
+                          'assets/icons8-help-72.png',
+                          height: 23,
+                          width: 23,
+                        )
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 5, top: 17),
+                      child: Text(
+                        'Phone Number',
+                        style: TextStyle(fontSize: 17),
                       ),
-                      const SizedBox(
-                        width: 7,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(style: BorderStyle.solid),
+                          borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey.shade200
                       ),
-                      Image.asset(
-                        'assets/icons8-help-72.png',
-                        height: 23,
-                        width: 23,
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  CustomButton(
-                    imgPath: null,
-                    onTap: () {},
-                    buttonText: 'Sing in',
-                    buttonColor: Colors.blue,
-                    textColor: Colors.white,
-                    borderRadius: 8,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Row(
+                      child: InternationalPhoneNumberInput(
+                        inputDecoration:
+                            const InputDecoration(border: InputBorder.none),
+                        onInputChanged: (PhoneNumber number) {
+                          if (kDebugMode) {
+                            print(number.phoneNumber);
+                          }
+                        },
+                        onInputValidated: (bool value) {
+                          if (kDebugMode) {
+                            print(value);
+                          }
+                        },
+                        selectorConfig: const SelectorConfig(
+                          selectorType: PhoneInputSelectorType.DROPDOWN,
+                        ),
+                        autoValidateMode: AutovalidateMode.disabled,
+                        selectorTextStyle: const TextStyle(color: Colors.black),
+                        initialValue: number,
+                        textFieldController: phoneController,
+                        formatInput: false,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            signed: true, decimal: true),
+                        hintText: 'Eg.4552648',
+                        onSaved: (PhoneNumber number) {
+                          if (kDebugMode) {
+                            print('On Saved: $number');
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CustomButton(
+                      imgPath: null,
+                      onTap: () {},
+                      buttonText: 'Sing in',
+                      buttonColor: Colors.blue,
+                      textColor: Colors.white,
+                      borderRadius: 8,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
@@ -118,68 +170,68 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 25),
-                  CustomButton(
-                    onTap: () {},
-                    imgPath: 'assets/icons8-google-72.png',
-                    width: 25,
-                    height: 25,
-                    buttonText: 'Sing with by google',
-                    buttonColor: Colors.white,
-                    textColor: Colors.blue,
-                    borderRadius: 8,
-                    borderColor: Colors.blue,
-                  ),
-                  const SizedBox(height: 35),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children:  [
+                    const SizedBox(height: 15),
+                    CustomButton(
+                      onTap: () {},
+                      imgPath: 'assets/icons8-google-72.png',
+                      width: 25,
+                      height: 25,
+                      buttonText: 'Sing with by google',
+                      buttonColor: Colors.white,
+                      textColor: Colors.blue,
+                      borderRadius: 8,
+                      borderColor: Colors.blue,
+                    ),
+                    const SizedBox(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                         const Text(
-                        "Doesn't has any account ",
+                          "Doesn't has any account? ",
                           style: TextStyle(color: Colors.black, fontSize: 17),
-
                         ),
-                      InkWell(
-
-                        child:   const Text(
-                          'Register here',
-                          style: TextStyle(color: Colors.blue, fontSize: 18),
-                        ),
-                        onTap: (){
-                          Navigator.pushNamed(context, RegisterScreen.routeName);
-                        },
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 20),
+                        InkWell(
+                          child: const Text(
+                            'Register here',
+                            style: TextStyle(color: Colors.blue, fontSize: 18),
+                          ),
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, RegisterScreen.routeName);
+                          },
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                     Padding(
-                     padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 10),
-                     child: Column(
-                       children: const [
-                         Text(
-textAlign: TextAlign.center,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: const [
+                          Text(
+                            textAlign: TextAlign.center,
 
                             'Use the application according to policy rules. Any ',
-                             style: TextStyle(
+                            style: TextStyle(
 
-                             color: Colors.grey,fontSize: 15,
-                         ),
-                         ),
-                         SizedBox(height:8,),
-                         Text(
-                           textAlign: TextAlign.center,
+                              color: Colors.grey,fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(height:8,),
+                          Text(
+                            textAlign: TextAlign.center,
 
-                           'kind of violations will be subject to sections.',
-                           style: TextStyle(
+                            'kind of violations will be subject to sections.',
+                            style: TextStyle(
 
-                             color: Colors.grey,fontSize: 15,
-                           ),
-                         ),
-                       ],
-                     ),
-                   )
-                ],
+                              color: Colors.grey,fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )
